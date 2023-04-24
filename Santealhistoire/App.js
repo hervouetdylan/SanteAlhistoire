@@ -1,16 +1,16 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import AddPlayersScreen from './screens/AddPlayersScreen';
-import PlayScreen from './screens/PlayScreen';
+import React, { Component } from "react";
+import { SafeAreaView, StyleSheet } from "react-navigation";
+import { Navigaiton } from "./Route/Navigation";
 
-const Stack = createStackNavigator();
-
-export default function App() {
+const App = () => {
+  
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="AddPlayers" component={AddPlayersScreen} />
-        <Stack.Screen name="Play" component={PlayScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SafeAreaView style={styles.root}>
+      <Navigaiton />
+    </SafeAreaView>
   );
-}
+
+};
+  
+export default App;
+   

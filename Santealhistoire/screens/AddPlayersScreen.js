@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
-const AddPlayerScreen = () => {
+const AddPlayerScreen = ({ navigation }) => {
   const [playerName, setPlayerName] = useState('');
   const [playersList, setPlayersList] = useState([]);
 
@@ -18,12 +19,11 @@ const AddPlayerScreen = () => {
     setPlayersList(updatedPlayersList);
   };
 
-  const handleStartGame = () => {
-    navigation.navigate('Play', { playersName });
-  };
+  //const stack = createNativeStackNavigator();
 
   return (
-    <View style={styles.container}>
+    <NavigationContainer>
+      <View style={styles.container}>
       <TextInput
         style={styles.input}
         placeholder="Enter player name"
@@ -41,10 +41,11 @@ const AddPlayerScreen = () => {
           </TouchableOpacity>
         </View>
       ))}
-      <TouchableOpacity style={styles.button} onPress={handleStartGame}>
-        <Text style={styles.buttonText}>Entrer</Text>
+      <TouchableOpacity style={styles.enterButton} onPress={() => navigation.navigate(PlayScreen)}>
+        <Text style={styles.buttonText}>Enter</Text>
       </TouchableOpacity>
     </View>
+    </NavigationContainer>
   );
 };
 
@@ -54,24 +55,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
   input: {
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: 'gray',
     borderRadius: 5,
     padding: 10,
     width: '80%',
     marginBottom: 20,
-  },
-  playersList: {
-    marginBottom: 20,
-  },
-  playerName: {
-    fontSize: 18,
-    marginBottom: 5,
   },
   button: {
     backgroundColor: '#007aff',
@@ -80,8 +70,36 @@ const styles = StyleSheet.create({
     width: '50%',
     alignItems: 'center',
   },
+  enterButton: {
+    backgroundColor: '#009900',
+    padding: 10,
+    borderRadius: 5,
+    width: '50%',
+    marginTop: 20,
+    alignItems: 'center',
+  },
   buttonText: {
     color: 'white',
     fontSize: 16,
   },
+  playerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#f7f7f7',
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 5,
+    padding: 10,
+    width: '80%',
+    marginBottom: 10,
+  },
+  playerName: {
+    fontSize: 16,
+  },
+  removeButton: {
+    color: 'red',
+  },
 });
+
+export default AddPlayerScreen;
