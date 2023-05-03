@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button } from 'react-native';
 
-const AddPlayerScreen = ({ navigation }) => {
+export default function AddPlayerScreen ({ navigation }) {
   const [playerName, setPlayerName] = useState('');
   const [playersList, setPlayersList] = useState([]);
 
@@ -19,33 +18,27 @@ const AddPlayerScreen = ({ navigation }) => {
     setPlayersList(updatedPlayersList);
   };
 
-  //const stack = createNativeStackNavigator();
-
   return (
-    <NavigationContainer>
-      <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter player name"
-        value={playerName}
-        onChangeText={setPlayerName}
-      />
-      <TouchableOpacity style={styles.button} onPress={handleAddPlayer}>
-        <Text style={styles.buttonText}>Add player</Text>
-      </TouchableOpacity>
-      {playersList.map((player, index) => (
-        <View key={index} style={styles.playerContainer}>
-          <Text style={styles.playerName}>{player}</Text>
-          <TouchableOpacity onPress={() => handleRemovePlayer(index)}>
-            <Text style={styles.removeButton}>Remove</Text>
-          </TouchableOpacity>
-        </View>
-      ))}
-      <TouchableOpacity style={styles.enterButton} onPress={() => navigation.navigate(PlayScreen)}>
-        <Text style={styles.buttonText}>Enter</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+    <TextInput
+      style={styles.input}
+      placeholder="Enter player name"
+      value={playerName}
+      onChangeText={setPlayerName}
+    />
+    <TouchableOpacity style={styles.button} onPress={handleAddPlayer}>
+      <Text style={styles.buttonText}>Add player</Text>
+    </TouchableOpacity>
+    {playersList.map((player, index) => (
+      <View key={index} style={styles.playerContainer}>
+        <Text style={styles.playerName}>{player}</Text>
+        <TouchableOpacity onPress={() => handleRemovePlayer(index)}>
+          <Text style={styles.removeButton}>Remove</Text>
+        </TouchableOpacity>
+      </View>
+    ))}
+    <Button title={"Game"} onPress={() => navigation.navigate('Play')}/>
     </View>
-    </NavigationContainer>
   );
 };
 
@@ -101,5 +94,3 @@ const styles = StyleSheet.create({
     color: 'red',
   },
 });
-
-export default AddPlayerScreen;

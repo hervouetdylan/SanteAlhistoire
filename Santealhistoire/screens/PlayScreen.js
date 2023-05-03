@@ -1,16 +1,12 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import * as React from 'react';
+import { Button, View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-
-const PlayScreen = () => {
-  return (
-    <NavigationContainer>
-      <View>
-        <Text>test</Text>
-      </View>
-    </NavigationContainer> 
+export default function PlayScreen(){
+  return(
+    <Text>
+      test
+    </Text>
   );
-};
-
-export default PlayScreen;
+}
