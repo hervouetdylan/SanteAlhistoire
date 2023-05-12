@@ -1,35 +1,115 @@
-import { StatusBar } from 'expo-status-bar';
-import { ImageBackground, StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet, View, Text, StatusBar, TextInput, TouchableOpacity } from 'react-native';
+import GestureFlipView from 'react-native-gesture-flip-card';
+import axios from 'axios';
 
-const image = { uri: "data:image/jpeg;base64,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" }
+const App = () => {
+  const [alcohol, setAlcohol] = useState({ name: '', date: '' });
+  const [inputDate, setInputDate] = useState('');
+  const [isDateCorrect, setIsDateCorrect] = useState(false);
+  const flipViewRef = useRef(null);
 
-export default function App() {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://192.168.1.40/Santealhistoire/Back/GetAlcohol.php');
+      const { name, date } = response.data;
+      setAlcohol({ name, date });
+      console.log(name, date);
+    } catch (error) {
+      console.log('Erreur lors de la récupération des données:', error);
+    }
+  };
+
+  const onChangeDate = (text) => {
+    setInputDate(text);
+  };
+
+  const checkDate = () => {
+    if (inputDate === alcohol.date) {
+      console.log('La date est correcte');
+      setIsDateCorrect(true);
+      flipViewRef.current.flip();
+    } else {
+      console.log('La date est incorrecte');
+      setIsDateCorrect(false);
+      flipViewRef.current.flip();
+    }
+  };
+
+  const renderFront = (name) => {
+    return (
+      <View style={styles.frontStyle}>
+        <Text style={{ fontSize: 25, color: '#fff' }}>En quelle date a été créée cette alcool : {name}</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeDate}
+          placeholder='Mettez une date'
+        />
+        <TouchableOpacity style={styles.button} onPress={checkDate}>
+          <Text style={styles.buttonText}>Vérifier</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const renderBack = (date) => {
+    console.log(date);
+    return (
+      <View style={styles.backStyle}>
+        <Text style={{ fontSize: 25, color: '#fff' }}>
+          {isDateCorrect ? 'La date est correcte' : 'La date est incorrecte'}
+        </Text>
+      </View>
+    );
+  };
+
   return (
-    <View style={styles.container}>
-      <ImageBackground source={image} style={styles.image}>
-        <Text style={styles.text}>Santé à l'histoire</Text>
-      </ImageBackground>
-    </View>
+    <>
+      <StatusBar barStyle="dark-content" />
+      <View style={styles.container}>
+        <View ref={flipViewRef}>
+          <GestureFlipView width={300} height={500}>
+            {renderFront(alcohol.name)}
+            {renderBack(alcohol.date)}
+          </GestureFlipView>
+        </View>
+      </View>
+    </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-  },
-  image: {
-    flex: 1,
-    resizeMode: 'cover',
+    backgroundColor: 'white',
     justifyContent: 'center',
+    alignItems: 'center',
   },
-  text: { 
-    
-    color: 'white',
-    fontSize: 42,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    backgroundColor: '#000000a0',
+  frontStyle: {
+    width: 300,
+    height: 500,
+    backgroundColor: '#f00',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+  },
+  backStyle: {
+    width: 300,
+    height: 500,
+    backgroundColor: '#f0f',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth : 1,
   },
 });
 
+export default App;
