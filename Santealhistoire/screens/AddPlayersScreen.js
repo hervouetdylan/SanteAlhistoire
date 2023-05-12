@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button, ImageBackground } from 'react-native';
 
 
 export default function AddPlayerScreen ({ navigation }) {
@@ -20,30 +20,46 @@ export default function AddPlayerScreen ({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-    <TextInput
-      style={styles.input}
-      placeholder="Enter player name"
-      value={playerName}
-      onChangeText={setPlayerName}
-    />
-    <TouchableOpacity style={styles.button} onPress={handleAddPlayer}>
-      <Text style={styles.buttonText}>Add player</Text>
-    </TouchableOpacity>
-    {playersList.map((player, index) => (
-      <View key={index} style={styles.playerContainer}>
-        <Text style={styles.playerName}>{player}</Text>
-        <TouchableOpacity onPress={() => handleRemovePlayer(index)}>
-          <Text style={styles.removeButton}>Remove</Text>
-        </TouchableOpacity>
+    <ImageBackground source={require('../assets/download.jpg')} style={styles.background}>
+      <Text style={styles.titre}>Santé à l'histoire</Text>
+      <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter player name"
+        value={playerName}
+        onChangeText={setPlayerName}
+      />
+      <TouchableOpacity style={styles.button} onPress={handleAddPlayer}>
+        <Text style={styles.buttonText}>Add player</Text>
+      </TouchableOpacity>
+      {playersList.map((player, index) => (
+        <View key={index} style={styles.playerContainer}>
+          <Text style={styles.playerName}>{player}</Text>
+          <TouchableOpacity onPress={() => handleRemovePlayer(index)}>
+            <Text style={styles.removeButton}>Remove</Text>
+          </TouchableOpacity>
+        </View>
+      ))}
+      <Button title={"Règle du jeux"} onPress={() => navigation.navigate("Rule")}/>
       </View>
-    ))}
-    <Button title={"Règle du jeux"} onPress={() => navigation.navigate("Rule")}/>
-    </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+  },
+
+  titre: {
+    fontSize: 20,
+    textAlign: 'center',
+    marginTop: 10,
+    color: 'blue',
+  },
+
   container: {
     flex: 1,
     alignItems: 'center',
