@@ -20,7 +20,7 @@ export default function PiccoloGame() {
 
   return (
     <View style={styles.container}>
-      <Text>{question}</Text>
+      <Text style={styles.question}>{question}</Text>
       <Button title="Nouvelle question" onPress={generateQuestion} />
     </View>
   );
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
+  question: {
     color: 'white',
   }
 });

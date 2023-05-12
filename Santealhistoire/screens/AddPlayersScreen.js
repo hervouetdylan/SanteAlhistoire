@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button } from 'react-native';
 
+
 export default function AddPlayerScreen ({ navigation }) {
   const [playerName, setPlayerName] = useState('');
   const [playersList, setPlayersList] = useState([]);
