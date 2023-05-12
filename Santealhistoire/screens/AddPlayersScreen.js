@@ -37,8 +37,7 @@ export default function AddPlayerScreen ({ navigation }) {
         </TouchableOpacity>
       </View>
     ))}
-    <Button title={"Règle du jeux"} onPress={() => navigation.navigate('Rule')}/>
-    <Button title={"Game"} onPress={() => navigation.navigate('Play')}/>
+    <Button title={"Règle du jeux"} onPress={() => navigation.navigate("Rule")}/>
     </View>
   );
 };

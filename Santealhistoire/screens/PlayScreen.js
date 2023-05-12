@@ -27,7 +27,7 @@ export default function PiccoloGame() {
 };
 
 
-({
+const styles = StyleSheet.create({
   container: {
     backgroundColor: 'blue',
     flex: 1,
@@ -37,4 +37,4 @@ export default function PiccoloGame() {
   text: {
     color: 'white',
   }
-})
+});
