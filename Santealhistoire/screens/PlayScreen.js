@@ -1,12 +1,40 @@
-import * as React from 'react';
-import { Button, View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
 
-export default function PlayScreen(){
-  return(
-    <Text>
-      test
-    </Text>
+export default function PiccoloGame() {
+  const [question, setQuestion] = useState('');
+
+  const questions = [
+    'Imite un animal de la ferme',
+    'Danse comme si personne ne te regardait',
+    'Fais le bruit d une voiture qui démarre',
+    'Mime ton sport préféré',
+    'Raconte une blague',
+    'Fais une grimace',
+  ];
+
+  const generateQuestion = () => {
+    const randomIndex = Math.floor(Math.random() * questions.length);
+    setQuestion(questions[randomIndex]);
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text>{question}</Text>
+      <Button title="Nouvelle question" onPress={generateQuestion} />
+    </View>
   );
-}
+};
+
+
+({
+  container: {
+    backgroundColor: 'blue',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    color: 'white',
+  }
+})
