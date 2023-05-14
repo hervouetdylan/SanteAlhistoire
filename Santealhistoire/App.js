@@ -7,7 +7,9 @@ const App = () => {
   const [alcohol, setAlcohol] = useState({ name: '', date: '' });
   const [inputDate, setInputDate] = useState('');
   const [isDateCorrect, setIsDateCorrect] = useState(false);
-  const flipViewRef = useRef(null);
+  const [showAnswer, setShowAnswer] = useState(false);
+
+  const flipViewRef = useRef('');
 
   useEffect(() => {
     fetchData();
@@ -32,14 +34,19 @@ const App = () => {
     if (inputDate === alcohol.date) {
       console.log('La date est correcte');
       setIsDateCorrect(true);
-      flipViewRef.current.flip();
+      return flipViewRef.current.flipRight();
     } else {
       console.log('La date est incorrecte');
       setIsDateCorrect(false);
-      flipViewRef.current.flip();
+      return flipViewRef.current.flipRight();
     }
   };
-
+  const handleNextQuestion = () => {
+    fetchData();
+    setInputDate('');
+    setShowAnswer(false);
+    flipViewRef.current.flipRight();
+  }
   const renderFront = (name) => {
     return (
       <View style={styles.frontStyle}>
@@ -61,8 +68,11 @@ const App = () => {
     return (
       <View style={styles.backStyle}>
         <Text style={{ fontSize: 25, color: '#fff' }}>
-          {isDateCorrect ? 'La date est correcte' : 'La date est incorrecte'}
-        </Text>
+          {isDateCorrect ? 'La date est correcte' : 'La date est incorrecte'} : {date}
+        </Text> 
+        <TouchableOpacity style={styles.button} onPress={handleNextQuestion}>
+          <Text style={styles.buttonText}>Suivant</Text>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -70,13 +80,12 @@ const App = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <View style={styles.container}>
-        <View ref={flipViewRef}>
-          <GestureFlipView width={300} height={500}>
+      <View style={styles.container}>      
+          <GestureFlipView width={300} height={500} ref={(ref) => (flipViewRef.current = ref)} gestureEnabled={false}>
             {renderFront(alcohol.name)}
             {renderBack(alcohol.date)}
+            {showAnswer && renderBack(alcohol.date)}
           </GestureFlipView>
-        </View>
       </View>
     </>
   );
@@ -112,4 +121,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default App
