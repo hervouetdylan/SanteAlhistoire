@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Button, ImageBackground } from 'react-native';
+import {usePlayersList} from './PlayerUtils'
 
 
-export default function AddPlayerScreen ({ navigation }) {
+export default function AddPlayerScreen ({ navigation}) {
   const [playerName, setPlayerName] = useState('');
-  const [playersList, setPlayersList] = useState([]);
+  const { playersList, addPlayer, removePlayer } = usePlayersList();
 
   const handleAddPlayer = () => {
     if (playerName.trim() !== '') {
-      setPlayersList([...playersList, playerName]);
+      addPlayer(playerName);
       setPlayerName('');
     }
   };
 
   const handleRemovePlayer = (playerIndex) => {
-    const updatedPlayersList = [...playersList];
-    updatedPlayersList.splice(playerIndex, 1);
-    setPlayersList(updatedPlayersList);
+    removePlayer(playerIndex);
   };
-
+  
   return (
     <ImageBackground source={require('../assets/download.jpg')} style={styles.background}>
       <Text style={styles.titre}>Santé à l'histoire</Text>
@@ -44,6 +43,7 @@ export default function AddPlayerScreen ({ navigation }) {
       </View>
     </ImageBackground>
   );
+
 };
 
 const styles = StyleSheet.create({
