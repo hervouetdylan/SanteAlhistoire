@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AddPlayerScreen from '../screens/AddPlayersScreen';
 import PlayScreen from '../screens/PlayScreen';
 import gameRules from '../screens/gameRules';
+import Question from '../screens/Question'
 
 const Stack = createNativeStackNavigator();
 
@@ -18,12 +19,17 @@ export default function stack() {
         <Stack.Screen
           name="Rule"
           component={gameRules}
-          options={{title: 'Règles du jeus'}}
+          options={{title: 'Règles du jeux'}}
         />
         <Stack.Screen
           name='Play'
           component={PlayScreen}
           options={{title: 'Jouer'}}
+        />
+        <Stack.Screen
+          name = 'SendQuestion'
+          component={Question}
+          options={{title : 'Mettez une question'}}
         />
           
       </Stack.Navigator>
